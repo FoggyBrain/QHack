@@ -18,7 +18,22 @@ def compare_circuits(angles):
     # QHACK #
 
     # define a device and quantum functions/circuits here
+    dev = qml.device("default.qubit", wires = 1)
 
+    @qml.qnode(dev)
+    def rotxy(angles):
+        qml.RX(angles[0], wires = 0)
+        qml.RY(angles[1], wires = 0)
+        return qml.expval(qml.PauliX(0))
+
+    @qml.qnode(dev)
+    def rotyx(angles):
+        qml.RY(angles[1], wires = 0)
+        qml.RX(angles[0], wires = 0)
+        return qml.expval(qml.PauliX(0))
+
+
+    return np.abs(rotxy(angles)-rotyx(angles))
     # QHACK #
 
 

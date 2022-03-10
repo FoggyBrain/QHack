@@ -19,8 +19,18 @@ def my_finite_diff_grad(params):
     """
 
     gradients = np.zeros([len(params)])
+    # print(gradients)
     for i in range(len(params)):
         # QHACK # 
+        shiftup = params
+        shiftup[i]+=1e-5
+        costup = cost(shiftup)
+
+        shiftdown = params
+        shiftdown[i]-=1e-5
+        costdown = cost(shiftdown)
+
+        gradients[i]=1e5*(costup-costdown)
 
         # QHACK #
 
